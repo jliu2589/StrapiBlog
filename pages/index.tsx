@@ -3,8 +3,12 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
+import { useState } from "react";
+import Restaurant_List from "../components/Restaurant_List";
 
-const Home: NextPage = () => {
+const Home: NextPage = (props) => {
+  const [data, setData] = useState(props.data.data);
+
   return (
     <Layout>
       <div className="flex justify-between items-center bg-yellow-400 border-y border-black lg:py-0">
@@ -21,6 +25,9 @@ const Home: NextPage = () => {
           alt="London logo"
         />
       </div>
+      <div>
+        <Restaurant_List props={data} />
+      </div>
     </Layout>
   );
 };
@@ -28,7 +35,9 @@ const Home: NextPage = () => {
 export default Home;
 
 export async function getServerSideProps() {
+  const res = await fetch(`${process.env.API_URL}/api/Restaurants`);
+  const data = await res.json();
   return {
-    props: {},
+    props: { data },
   };
 }
