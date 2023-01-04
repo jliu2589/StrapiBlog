@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 
 function Restaurants() {
   //const restaurant = data.filter(res => res.slug === slug)
