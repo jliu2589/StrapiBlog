@@ -1,5 +1,7 @@
 import Layout from "../../components/Layout";
-import Image from "next/image";
+import Image from "next/legacy/image";
+import { useState } from "react";
+import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 
 function Restaurants(props) {
   //const restaurant = data.filter(res => res.slug === slug)
@@ -12,23 +14,30 @@ function Restaurants(props) {
 
   const photos = restaurant.attributes.photos.data;
 
-  const slideshow = photos.map((pic) => {
-    return (
-      <img
-        src={`http://localhost:1337${pic.attributes.formats.medium.url}`}
-        alt={pic.attributes.formats.medium.name}
-        key={pic.attributes.formats.hash}
-      />
-    );
-  });
+  const image = [];
+
+  photos.map((pic) =>
+    image.push(`http://localhost:1337${pic.attributes.formats.medium.url}`)
+  );
+
+  console.log(image);
 
   return (
     <Layout>
-      <h1>{restaurant.attributes.Name}</h1>
-      <div>{slideshow}</div>
+      <div className="relative">
+        <h1>{restaurant.attributes.Name}</h1>
+        <div>
+          <img src={image[0]} alt="restaurant pic" />
+          <div className="absolute left-0 top-50% transform -translate-y-1/2 rounded-full p-2 bg-gray-500 text-white hover:bg-gray-600">
+            <BsChevronCompactLeft size={30} />
+          </div>
+          <div className="">
+            <BsChevronCompactRight size={30} />
+          </div>
+        </div>
+      </div>
     </Layout>
   );
-  4;
 }
 export default Restaurants;
 
