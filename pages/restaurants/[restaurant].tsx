@@ -24,17 +24,22 @@ function Restaurants(props) {
 
   return (
     <Layout>
-      <div className="relative">
-        <h1>{restaurant.attributes.Name}</h1>
-        <div>
-          <img src={image[0]} alt="restaurant pic" />
-          <div className="absolute left-0 top-50% transform -translate-y-1/2 rounded-full p-2 bg-gray-500 text-white hover:bg-gray-600">
-            <BsChevronCompactLeft size={30} />
-          </div>
-          <div className="">
-            <BsChevronCompactRight size={30} />
-          </div>
+      <div className="">
+        <div className="max-w-7xl mx-auto">
+          <img
+            src={image[0]}
+            alt="restaurant pic"
+            className="h-25 w-25 flex mx-auto object-cover"
+          />
         </div>
+        <h1 className="text-6xl p-3 m-3">{restaurant.attributes.Name}</h1>
+        <div className="flex justify-around my-4">
+          <span>By Jason Liu</span>
+          <span>{restaurant.attributes.createdAt}</span>
+        </div>
+
+        <p className="my-3 px-3">{restaurant.attributes.review}</p>
+        <p className="text-xl text-center">{restaurant.attributes.rating}/10</p>
       </div>
     </Layout>
   );

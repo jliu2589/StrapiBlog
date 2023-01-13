@@ -3,7 +3,7 @@ import Link from "next/link.js";
 
 function Restaurant_List({ props }) {
   return (
-    <div className="">
+    <div className="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {props.map((res) => (
         <Card key={res.attributes.id}>
           <Link href={`/restaurants/${res.attributes.Name}`}>
