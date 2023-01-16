@@ -4,9 +4,9 @@ import { useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 
 function Restaurants(props) {
-  //const restaurant = data.filter(res => res.slug === slug)
-
   const { restaurant } = props;
+
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!restaurant) {
     return <p>Loading...</p>;
@@ -14,32 +14,54 @@ function Restaurants(props) {
 
   const photos = restaurant.attributes.photos.data;
 
-  const image = [];
+  const images = [];
 
   photos.map((pic) =>
-    image.push(`http://localhost:1337${pic.attributes.formats.medium.url}`)
+    images.push(`http://localhost:1337${pic.attributes.formats.medium.url}`)
   );
 
-  console.log(image);
+  const handleNextClick = () => {
+    setCurrentIndex((currentIndex + 1) % images.length);
+  };
+
+  const handlePreviousClick = () => {
+    setCurrentIndex((currentIndex - 1 + images.length) % images.length);
+  };
+
+  console.log(currentIndex);
 
   return (
     <Layout>
       <div className="">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl h-25 mx-auto relative">
           <img
-            src={image[0]}
+            src={images[currentIndex]}
             alt="restaurant pic"
-            className="h-25 w-25 flex mx-auto object-cover"
+            className="h-full w-full flex mx-auto object-cover bg-slate-400 object-cover"
           />
+          <button
+            className="absolute top-[50%] translate-y-[-50%] left-2"
+            onClick={handlePreviousClick}>
+            <BsChevronCompactLeft color="white" />
+          </button>
+          <button
+            className="absolute top-[50%] translate-y-[-50%] right-2 "
+            onClick={handleNextClick}>
+            <BsChevronCompactRight color="white" />
+          </button>
         </div>
-        <h1 className="text-6xl p-3 m-3">{restaurant.attributes.Name}</h1>
-        <div className="flex justify-around my-4">
-          <span>By Jason Liu</span>
-          <span>{restaurant.attributes.createdAt}</span>
-        </div>
+        <div className="clear-both">
+          <h1 className="text-6xl p-3 m-3">{restaurant.attributes.Name}</h1>
+          <div className="flex justify-around my-4">
+            <span>By Jason Liu</span>
+            <span>{restaurant.attributes.createdAt}</span>
+          </div>
 
-        <p className="my-3 px-3">{restaurant.attributes.review}</p>
-        <p className="text-xl text-center">{restaurant.attributes.rating}/10</p>
+          <p className="my-3 px-3">{restaurant.attributes.review}</p>
+          <p className="text-xl text-center">
+            {restaurant.attributes.rating}/10
+          </p>
+        </div>
       </div>
     </Layout>
   );
